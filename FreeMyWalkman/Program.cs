@@ -9,12 +9,18 @@ namespace FreeMyWalkman
     {
         static void Main(string[] args)
         {
+            //Welcome message
+            Console.WriteLine("Walkman cleanup Utility");
+            Console.WriteLine("=======================");
+
             if (args.Length == 0)
             {
                 //No arguments given
                 Console.WriteLine("You need to provide at least a directory as argument.");
                 return;
             }
+
+            Console.WriteLine("Paths Submitted:");
 
             //Add Paths
             var folders = new List<string>();
@@ -30,13 +36,15 @@ namespace FreeMyWalkman
                     {
                         //Add path only if exists
                         folders.Add(arg);
+                        Console.WriteLine(arg);
                     }
                     else
                     {
-                        Console.WriteLine($"Directory: `{arg}` is not found.");
+                        Console.WriteLine($"`{arg}` - NOT Found.");
                     }
                 }
             }
+            Console.WriteLine();
 
             //Load directories
             foreach(var targetDirectory in folders)
@@ -55,7 +63,7 @@ namespace FreeMyWalkman
                     //Get clean list
                     var cleanList = filepaths.Where(m => !walkmanMusicList.Any(m2 => m == m2));
 
-                    Console.WriteLine("==================");
+                    Console.WriteLine("==========");
                     Console.WriteLine("Summary for {0}", targetDirectory);
                     Console.WriteLine("Files found: {0}", filepaths.Count());
                     Console.WriteLine("Files pending for removal: {0}", cleanList.Count());

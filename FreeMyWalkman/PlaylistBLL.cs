@@ -17,6 +17,7 @@ namespace FreeMyWalkman
         /// <returns></returns>
         public static List<string> GetSongList(string playListFile)
         {
+            Console.Write("Playlist: {0} - ", Path.GetFileNameWithoutExtension(playListFile));
             var songList = new List<string>();
             try
             {   // Open the text file using a stream reader.
@@ -31,6 +32,7 @@ namespace FreeMyWalkman
                         }
                     }
                 }
+                Console.WriteLine("{0} Songs", songList.Count);
             }
             catch (Exception e)
             {
