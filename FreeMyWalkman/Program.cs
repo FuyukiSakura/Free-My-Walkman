@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace FreeMyWalkman
 {
@@ -6,7 +9,12 @@ namespace FreeMyWalkman
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            if (args.Length == 0)
+            {
+                //No arguments given
+                Console.WriteLine("You need to provide at least a directory as argument.");
+                return;
+            }
         }
     }
 }
