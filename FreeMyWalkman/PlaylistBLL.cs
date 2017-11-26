@@ -27,7 +27,7 @@ namespace FreeMyWalkman
                     {
                         if (!line.StartsWith("#"))
                         {
-                            songList.Add(line);
+                            songList.Add(line.Replace('/', Path.DirectorySeparatorChar)); //Replace walkman separator to System directory separator
                         }
                     }
                 }
