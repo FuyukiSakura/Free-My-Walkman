@@ -15,7 +15,7 @@ namespace FreeMyWalkman
         /// </summary>
         /// <param name="playListFile"></param>
         /// <returns></returns>
-        public static List<string> GetSongList(string playListFile)
+        public static List<string> GetSongFromList(string playListFile)
         {
             Console.Write("Playlist: {0} - ", Path.GetFileNameWithoutExtension(playListFile));
             var songList = new List<string>();
