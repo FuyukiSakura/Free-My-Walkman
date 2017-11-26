@@ -70,12 +70,16 @@ namespace FreeMyWalkman
 
                 //Get clean list
                 var cleanList = filepaths.Where(m => !walkmanMusicList.Any(m2 => m == m2));
+                var filesLeft = filepaths.Count() - cleanList.Count();
 
                 Console.WriteLine("==========");
-                Console.WriteLine("Summary for {0}", targetDirectory);
+                Console.WriteLine("Summary for `{0}`", targetDirectory);
                 Console.WriteLine("Files found: {0}", filepaths.Count());
                 Console.WriteLine("Files pending for removal: {0}", cleanList.Count());
-                Console.WriteLine("Files left after removal: {0}", filepaths.Count() - cleanList.Count());
+                Console.WriteLine("Files left after removal: {0}", filesLeft);
+                Console.WriteLine();
+                Console.WriteLine("========== VERIFY");
+                Console.WriteLine("Songs in playlist: {0} | Files Left: {1} | {2}", walkmanMusicList.Count, filesLeft, walkmanMusicList.Count == filesLeft);
 
                 //Debug
                 foreach (var music in cleanList)
