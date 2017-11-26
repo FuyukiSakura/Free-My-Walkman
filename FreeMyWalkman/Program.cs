@@ -51,7 +51,7 @@ namespace FreeMyWalkman
             //Load directories
             foreach (var targetDirectory in folders)
             {
-                 Task.Run(() => HandleWalkmanRootPath(targetDirectory));
+                 HandleWalkmanRootPath(targetDirectory);
             }
             Console.ReadLine();
         }
@@ -60,7 +60,7 @@ namespace FreeMyWalkman
         /// Load the directory given in the path as arg for any playlist
         /// </summary>
         /// <param name="targetDirectory"></param>
-        public async static Task HandleWalkmanRootPath(string targetDirectory)
+        public static void HandleWalkmanRootPath(string targetDirectory)
         {
             var playlists = Directory.GetFiles(targetDirectory, "*.M3U8");
             if (playlists.Any())
@@ -69,7 +69,7 @@ namespace FreeMyWalkman
                     .Where(x => Path.GetExtension(x) != ".M3U8")
                     .Select(f => Path.GetRelativePath(targetDirectory, f));
 
-                var walkmanMusicList = await GetSong(playlists);
+                var walkmanMusicList = GetSong(playlists);
 
                 //Get clean list
                 var cleanList = filepaths.Where(m => !walkmanMusicList.Any(m2 => m == m2));
@@ -117,14 +117,19 @@ namespace FreeMyWalkman
         /// </summary>
         /// <param name="playlists"></param>
         /// <returns></returns>
-        private static async Task<List<string>> GetSong(string[] playlists)
+        private static List<string> GetSong(string[] playlists)
         {
             var songList = new List<string>();
             foreach (var playlist in playlists)
             {
-                songList.AddRange(await Task.Run(() => PlaylistBLL.GetSongFromList(playlist)));
+                songList.AddRange(PlaylistBLL.GetSongFromList(playlist));
             }
             return songList.Select(s => s).Distinct().ToList();
+        }
+
+        private static async Task<char> ReadKeyAsync()
+        {
+            return await Task.Run(() => Console.ReadKey().KeyChar);
         }
     }
 }

@@ -15,10 +15,10 @@ namespace FreeMyWalkman
         /// </summary>
         /// <param name="playListFile"></param>
         /// <returns></returns>
-        public static async Task<List<string>> GetSongFromList(string playListFile)
+        public static List<string> GetSongFromList(string playListFile)
         {
             Console.Write("Playlist: {0} - ", Path.GetFileNameWithoutExtension(playListFile));
-            var songList = await Task.Run(() => ReadPlaylist(playListFile));
+            var songList = ReadPlaylist(playListFile);
             return songList;
         }
 
