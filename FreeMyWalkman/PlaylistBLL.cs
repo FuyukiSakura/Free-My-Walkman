@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace FreeMyWalkman
 {
@@ -15,16 +15,27 @@ namespace FreeMyWalkman
         /// </summary>
         /// <param name="playListFile"></param>
         /// <returns></returns>
-        public static List<string> GetSongFromList(string playListFile)
+        public static async Task<List<string>> GetSongFromList(string playListFile)
         {
             Console.Write("Playlist: {0} - ", Path.GetFileNameWithoutExtension(playListFile));
+            var songList = await Task.Run(() => ReadPlaylist(playListFile));
+            return songList;
+        }
+
+        /// <summary>
+        /// Read file stream
+        /// </summary>
+        /// <param name="playListFile"></param>
+        /// <returns></returns>
+        private static List<string> ReadPlaylist(string playListFile)
+        {
             var songList = new List<string>();
             try
             {   // Open the text file using a stream reader.
                 using (StreamReader sr = new StreamReader(playListFile))
                 {
                     string line;
-                    while((line = sr.ReadLine()) != null)
+                    while ((line = sr.ReadLine()) != null)
                     {
                         if (!line.StartsWith("#"))
                         {
