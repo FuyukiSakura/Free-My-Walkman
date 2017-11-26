@@ -99,6 +99,24 @@ namespace FreeMyWalkman
                 //Change the color back
                 Console.ForegroundColor = ConsoleColor.Gray;
 
+                //Confirm for operation
+                Console.Write("Are you sure you want to clean the directory? (y/n)");
+
+                var confirm = Console.ReadKey().KeyChar;
+                if (confirm == 'y')
+                {
+                    //Clean the directory
+                    Console.WriteLine("Clean up confirmed.");
+                }
+                else
+                {
+                    //Exit current directory
+                    Console.WriteLine("Clean up cancelled for `{0}`", targetDirectory);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("Press any key to continue... ");
+
                 //Debug
                 foreach (var music in cleanList)
                 {
