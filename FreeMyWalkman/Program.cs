@@ -11,7 +11,8 @@ namespace FreeMyWalkman
         static void Main(string[] args)
         {
             //Welcome message
-            Console.WriteLine("Walkman cleanup Utility");
+            Console.WriteLine("Free My Walkman - Walkman Cleanup Utility");
+            Console.WriteLine("UTOSOFT (C) 2015 - 2017");
             Console.WriteLine("=======================");
 
             if (args.Length == 0)
@@ -64,7 +65,9 @@ namespace FreeMyWalkman
             var playlists = Directory.GetFiles(targetDirectory, "*.M3U8");
             if (playlists.Any())
             {
-                var filepaths = Directory.GetFiles(targetDirectory, "*", SearchOption.AllDirectories).Select(f => Path.GetRelativePath(targetDirectory, f));
+                var filepaths = Directory.GetFiles(targetDirectory, "*", SearchOption.AllDirectories)
+                    .Where(x => Path.GetExtension(x) != ".M3U8")
+                    .Select(f => Path.GetRelativePath(targetDirectory, f));
 
                 var walkmanMusicList = await GetSong(playlists);
 
