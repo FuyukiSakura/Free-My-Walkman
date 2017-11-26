@@ -45,10 +45,6 @@ namespace FreeMyWalkman
                 if (playlists.Any())
                 {
                     var filepaths = Directory.GetFiles(targetDirectory, "*", SearchOption.AllDirectories).Select(f => Path.GetRelativePath(targetDirectory, f));
-                    foreach(var file in filepaths)
-                    {
-                        Console.WriteLine("Processed file '{0}'.", file);
-                    }
 
                     var walkmanMusicList = new List<string>();
                     foreach(var playlist in playlists)
@@ -56,8 +52,17 @@ namespace FreeMyWalkman
                         walkmanMusicList.AddRange(PlaylistBLL.GetSongList(playlist));
                     }
 
+                    //Get clean list
+                    var cleanList = filepaths.Where(m => !walkmanMusicList.Any(m2 => m == m2));
+
+                    Console.WriteLine("==================");
+                    Console.WriteLine("Summary for {0}", targetDirectory);
+                    Console.WriteLine("Files found: {0}", filepaths.Count());
+                    Console.WriteLine("Files pending for removal: {0}", cleanList.Count());
+                    Console.WriteLine("Files left after removal: {0}", filepaths.Count() - cleanList.Count());
+
                     //Debug
-                    foreach(var music in walkmanMusicList)
+                    foreach(var music in cleanList)
                     {
                         //Console.WriteLine(music);
                     }
