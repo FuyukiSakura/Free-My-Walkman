@@ -82,7 +82,22 @@ namespace FreeMyWalkman
                 Console.WriteLine("Files left after removal: {0}", filesLeft);
                 Console.WriteLine();
                 Console.WriteLine("========== VERIFY");
-                Console.WriteLine("Songs in playlist: {0} | Files Left: {1} | {2}", walkmanMusicList.Count, filesLeft, walkmanMusicList.Count == filesLeft);
+                Console.Write("Songs in playlist: {0} | Files Left: {1} | ", walkmanMusicList.Count, filesLeft);
+                if(walkmanMusicList.Count == filesLeft)
+                {
+                    //Verified
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("VERIFIED");
+                }
+                else
+                {
+                    //Verification failed
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("FAILED");
+                    Console.WriteLine("You may lost access to an existing song if you proceed.");
+                }
+                //Change the color back
+                Console.ForegroundColor = ConsoleColor.Gray;
 
                 //Debug
                 foreach (var music in cleanList)
@@ -102,7 +117,7 @@ namespace FreeMyWalkman
         /// </summary>
         /// <param name="playlists"></param>
         /// <returns></returns>
-        private async static Task<List<string>> GetSong(string[] playlists)
+        private static async Task<List<string>> GetSong(string[] playlists)
         {
             var songList = new List<string>();
             foreach (var playlist in playlists)
