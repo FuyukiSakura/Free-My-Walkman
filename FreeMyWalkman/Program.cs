@@ -106,7 +106,7 @@ namespace FreeMyWalkman
             {
                 songList.AddRange(await Task.Run(() => PlaylistBLL.GetSongFromList(playlist)));
             }
-            return songList;
+            return songList.Select(s => s).Distinct().ToList();
         }
     }
 }
