@@ -44,12 +44,23 @@ namespace FreeMyWalkman
                 var playlists = Directory.GetFiles(targetDirectory, "*.M3U8");
                 if (playlists.Any())
                 {
-                    var filenames = Directory.GetFiles(targetDirectory, "*", SearchOption.AllDirectories).Select(f => Path.GetRelativePath(targetDirectory, f));
-                    foreach(var file in filenames)
+                    var filepaths = Directory.GetFiles(targetDirectory, "*", SearchOption.AllDirectories).Select(f => Path.GetRelativePath(targetDirectory, f));
+                    foreach(var file in filepaths)
                     {
                         Console.WriteLine("Processed file '{0}'.", file);
                     }
-                    
+
+                    var walkmanMusicList = new List<string>();
+                    foreach(var playlist in playlists)
+                    {
+                        walkmanMusicList.AddRange(PlaylistBLL.GetSongList(playlist));
+                    }
+
+                    //Debug
+                    foreach(var music in walkmanMusicList)
+                    {
+                        //Console.WriteLine(music);
+                    }
                 }
                 else
                 {
