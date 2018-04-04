@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FreeMyWalkman": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Temp\\WalkmanTest C:\\somethingnotexists"
+    }
+  }
+}
