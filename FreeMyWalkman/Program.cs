@@ -109,7 +109,19 @@ namespace FreeMyWalkman
                 if (confirm == 'y')
                 {
                     //Clean the directory
+                    Console.WriteLine();
                     Console.WriteLine("Clean up confirmed.");
+                    foreach(var file in removeList)
+                    {
+                        try
+                        {
+                            File.Delete(Path.Combine(targetDirectory, file));
+                            Console.WriteLine("{0} - Deleted", file);
+                        }catch(Exception ex)
+                        {
+                            Console.WriteLine("{0} - Failed: {1}", ex.Message);
+                        }
+                    }
                 }
                 else
                 {
