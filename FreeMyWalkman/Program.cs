@@ -12,7 +12,7 @@ namespace FreeMyWalkman
         {
             //Welcome message
             Console.WriteLine("Free My Walkman - Walkman Cleanup Utility");
-            Console.WriteLine("UTOSOFT (C) 2015 - 2017");
+            Console.WriteLine("UTOSOFT (C) 2015 - 2018");
             Console.WriteLine("=======================");
 
             if (args.Length == 0)
@@ -65,25 +65,28 @@ namespace FreeMyWalkman
             var playlists = Directory.GetFiles(targetDirectory, "*.M3U8");
             if (playlists.Any())
             {
-                var filepaths = Directory.GetFiles(targetDirectory, "*", SearchOption.AllDirectories)
+                var allFilePaths = Directory.GetFiles(targetDirectory, "*", SearchOption.AllDirectories)
                     .Where(x => Path.GetExtension(x) != ".M3U8")
                     .Select(f => Path.GetRelativePath(targetDirectory, f));
 
                 var walkmanMusicList = GetSong(playlists);
 
-                //Get clean list
-                var cleanList = filepaths.Where(m => !walkmanMusicList.Any(m2 => m == m2));
-                var filesLeft = filepaths.Count() - cleanList.Count();
+                //Get remove list
+                var removeList = allFilePaths.Where(m => !walkmanMusicList.Any(m2 => m == m2));
+                var filesLeft = allFilePaths.Count() - removeList.Count();
+                var filesMissing = walkmanMusicList.Where(m => !allFilePaths.Any(m2 => m == m2)).Count();
 
                 Console.WriteLine("==========");
                 Console.WriteLine("Summary for `{0}`", targetDirectory);
-                Console.WriteLine("Files found: {0}", filepaths.Count());
-                Console.WriteLine("Files pending for removal: {0}", cleanList.Count());
+                Console.WriteLine("Files found: {0}", allFilePaths.Count());
+                Console.WriteLine("Files reference missing: {0}", filesMissing);
+                Console.WriteLine();
+                Console.WriteLine("Files pending for removal: {0}", removeList.Count());
                 Console.WriteLine("Files left after removal: {0}", filesLeft);
                 Console.WriteLine();
                 Console.WriteLine("========== VERIFY");
                 Console.Write("Songs in playlist: {0} | Files Left: {1} | ", walkmanMusicList.Count, filesLeft);
-                if(walkmanMusicList.Count == filesLeft)
+                if(walkmanMusicList.Count == filesLeft + filesMissing)
                 {
                     //Verified
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -118,7 +121,7 @@ namespace FreeMyWalkman
                 Console.WriteLine("Press any key to continue... ");
 
                 //Debug
-                foreach (var music in cleanList)
+                foreach (var music in removeList)
                 {
                     //Console.WriteLine(music);
                 }
